@@ -11,6 +11,7 @@
 #include <ti/devices/msp432p4xx/driverlib/driverlib.h>
 #include "myGPIO.h"
 
+
 // TODO: Create a function to initialize the GPIO.
 // Even though this assignment does not use all of the pushbuttons, you should write one function that does a complete GPIO init.
 void initGPIO()
@@ -29,21 +30,6 @@ void initGPIO()
         GPIO_setAsOutputPin(GPIO_PORT_P5, GPIO_PIN6);
 
 
-
-turnOff_LaunchpadLED1();   // Launchpad LED1
-
-turnOff_LaunchpadLED2Red(); // Launchpad LED2 Red
-
-turnOff_LaunchpadLED2Green(); // Launchpad LED2 Green
-
-turnOff_LaunchpadLED2Blue();// Launchpad LED2 Blue
-
-turnOff_BoosterpackLEDRed();   // Boosterpack LED Red
-
-turnOff_BoosterpackLEDGreen(); // Boosterpack LED Green
-turnOff_BoosterpackLEDBlue();// Launchpad LED2 Blue
-
-
 checkStatus_LaunchpadS1();// Launchpad S1
 
 checkStatus_LaunchpadS2();// Launchpad S2
@@ -54,7 +40,23 @@ checkStatus_BoosterpackS2();// Boosterpack S2
 
 // Turn off all LEDs at the start.
 }
+void reset_LaunchLED(){
+    turnOff_LaunchpadLED1();   // Launchpad LED1
 
+    turnOff_LaunchpadLED2Red(); // Launchpad LED2 Red
+
+    turnOff_LaunchpadLED2Green(); // Launchpad LED2 Green
+
+    turnOff_LaunchpadLED2Blue();// Launchpad LED2 Blue
+}
+void reset_BoosterLED(){
+
+    turnOff_BoosterpackLEDRed();   // Boosterpack LED Red
+
+    turnOff_BoosterpackLEDGreen(); // Boosterpack LED Green
+    turnOff_BoosterpackLEDBlue();// Launchpad LED2 Blue
+
+}
 // TODO: Create a function to return the status of Launchpad Pushbutton S1
 unsigned char checkStatus_LaunchpadS1()
 {
@@ -64,7 +66,7 @@ unsigned char checkStatus_LaunchpadS1()
 // TODO: Create a function to return the status of Launchpad Pushbutton S2
 unsigned char checkStatus_LaunchpadS2()
 {
-    return GPIO_getInputPinValue(GPIO_PORT_P1, GPIO_PIN4);
+   return GPIO_getInputPinValue(GPIO_PORT_P1, GPIO_PIN4);
 }
 
 // TODO: Create a function to return the status of Boosterpack Pushbutton S1

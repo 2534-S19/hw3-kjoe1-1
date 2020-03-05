@@ -4,25 +4,11 @@
 #include "myTimer.h"
 #include <stdio.h>
 #include <stdlib.h>
-void  LED1();
-void  Left_RGB_R();
-void  Left_RGB_G();
-void Left_RGB_B();
-void LED1off();
-void Left_RGB_R_Off();
-void Left_RGB_G_Off();
-void Left_RGB_B_Off();
 
-void light_1();
-void light_2();
-void light_3();
-void light_4();
-void light_5();
-void light_6();
-void light_7();
 
-int main(void)
-{
+
+
+int main(void) {
     // Count variables to control the LEDs.
     unsigned int count = 0;
     unsigned int count1 = 0;
@@ -44,6 +30,7 @@ int main(void)
 
     while(1)
     {
+        initGPIO();
         // Update the color of LED2 using count0 as the index.
         // YOU MUST WRITE THIS FUNCTION BELOW.
         changeLaunchpadLED2(count);
@@ -58,14 +45,24 @@ int main(void)
         if (timer0Expired() == true){
             count = (++count)%12;
             printf("count is now: %d\n", count);
-            int i;
-            for(i = 0; i < 100000; i++)
-               ; // do nothing... lotta cpu load down here for nothing :(
+
+
         }
+
+        if (timer1Expired() == true)
+        {
+            int retval =checkStatus_LaunchpadS2();
+            if (retval){
+              count1= (++count1)%8;
+              printf("count1 is now: %d\n", count1);
+           }
+
+        }
+        int i;
+        for(i=0; i<1000;i++);// do nothing... lotta cpu load down here for nothing :(
 
         // TODO: If Timer1 has expired, update the button history from the pushbutton value.
         // YOU MUST WRITE timer1expired IN myTimer.c
-
 
 
         // TODO: Call the button state machine function to check for a completed, debounced button press.
@@ -89,7 +86,7 @@ void initBoard()
 // Since count is an unsigned integer, you can mask the value in some way.
 void changeLaunchpadLED2(unsigned int count)
 {
-    initGPIO();
+    reset_LaunchLED();
   if (count ==0 ){
 
       turnOn_LaunchpadLED1();
@@ -153,8 +150,46 @@ void changeLaunchpadLED2(unsigned int count)
 
 // TODO: Maybe the value of a count variable to a color for the Boosterpack LED
 // This is essentially a copy of the previous function, using a different LED
-void changeBoosterpackLED(unsigned int count)
+void changeBoosterpackLED(unsigned int count1)
 {
+   reset_BoosterLED();
+   if (count1 ==0 ){
+
+       turnOn_BoosterpackLEDRed();
+
+   }
+   else if (count1 ==1){
+
+        turnOn_BoosterpackLEDBlue();
+   }
+   else if (count1 ==2){
+       turnOn_BoosterpackLEDGreen();
+
+     }
+   else if (count1 ==3){
+       turnOn_BoosterpackLEDRed();
+     }
+   else if (count1 ==4){
+       turnOn_BoosterpackLEDBlue();
+       turnOn_BoosterpackLEDGreen();
+     }
+   else if (count1 ==5){
+       turnOn_BoosterpackLEDBlue();
+     }
+   else if (count1 ==6){
+       turnOn_BoosterpackLEDBlue();
+       turnOn_BoosterpackLEDRed();
+       turnOn_BoosterpackLEDGreen();
+     }
+   else if (count1 ==7){
+       turnOn_BoosterpackLEDGreen();
+
+     }
+   else if (count1 ==8){
+       turnOn_BoosterpackLEDBlue();
+       turnOn_BoosterpackLEDRed();
+     }
+
 
 }
 
