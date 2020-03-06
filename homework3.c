@@ -68,19 +68,22 @@ int main() {
 
             while(checkStatus_LaunchpadS2() ==0)
             {
-                initGPIO();
-                changeLaunchpadLED2(count);
-                changeBoosterpackLED(count1);
+               // initGPIO();
+
+              //  changeBoosterpackLED(count1);
                 if (timer0Expired() == true)
                       {
                          if (count<10)
                          {
                              count = (++count);
+
                          }
                          else {count =0;}
                           printf("count is now: %d\n", count);
-                        //  changeLaunchpadLED2(count);
 
+                        changeLaunchpadLED2(count);
+                        int i=0;
+                       for(i=0;i<10;i++);
                       }
 
             }
