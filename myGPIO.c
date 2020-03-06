@@ -37,6 +37,18 @@ checkStatus_LaunchpadS2();// Launchpad S2
 checkStatus_BoosterpackS1(); // Boosterpack S1
 
 checkStatus_BoosterpackS2();// Boosterpack S2
+turnOff_LaunchpadLED1();   // Launchpad LED1
+
+turnOff_LaunchpadLED2Red(); // Launchpad LED2 Red
+
+turnOff_LaunchpadLED2Green(); // Launchpad LED2 Green
+
+turnOff_LaunchpadLED2Blue();// Launchpad LED2 Blue
+turnOff_BoosterpackLEDRed();   // Boosterpack LED Red
+
+ turnOff_BoosterpackLEDGreen(); // Boosterpack LED Green
+ turnOff_BoosterpackLEDBlue();// Launchpad LED2 Blue
+
 
 // Turn off all LEDs at the start.
 }

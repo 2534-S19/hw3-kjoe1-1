@@ -8,7 +8,7 @@
 
 
 
-int main(void) {
+int main() {
     // Count variables to control the LEDs.
     unsigned int count = 0;
     unsigned int count1 = 0;
@@ -41,9 +41,14 @@ int main(void) {
         // TODO: If Timer0 has expired, increment count0.
         // YOU MUST WRITE timer0expired IN myTimer.c
 
-        printf("going through the loop...\n:");
-        if (timer0Expired() == true){
-            count = (++count)%12;
+      //  printf("going through the loop...\n:");
+        if (timer0Expired() == true)
+        {
+           if (count<10)
+           {
+               count = (++count);
+           }
+           else {count =0;}
             printf("count is now: %d\n", count);
 
 
@@ -52,14 +57,35 @@ int main(void) {
         if (timer1Expired() == true)
         {
             int retval =checkStatus_LaunchpadS2();
-            if (retval){
-              count1= (++count1)%8;
-              printf("count1 is now: %d\n", count1);
-           }
+            if (retval==0){
+              if (count1 <7){
+                  count1= ++count1;
 
+              }
+              else {count1 =0;}
+             printf("count1 is now: %d\n", count1);
+
+
+            while(checkStatus_LaunchpadS2() ==0)
+            {
+                initGPIO();
+                changeLaunchpadLED2(count);
+                changeBoosterpackLED(count1);
+                if (timer0Expired() == true)
+                      {
+                         if (count<10)
+                         {
+                             count = (++count);
+                         }
+                         else {count =0;}
+                          printf("count is now: %d\n", count);
+                        //  changeLaunchpadLED2(count);
+
+                      }
+
+            }
+            }
         }
-        int i;
-        for(i=0; i<1000;i++);// do nothing... lotta cpu load down here for nothing :(
 
         // TODO: If Timer1 has expired, update the button history from the pushbutton value.
         // YOU MUST WRITE timer1expired IN myTimer.c
@@ -87,64 +113,61 @@ void initBoard()
 void changeLaunchpadLED2(unsigned int count)
 {
     reset_LaunchLED();
-  if (count ==0 ){
+    if (count ==0 ){
 
-      turnOn_LaunchpadLED1();
-
-  }
-  else if (count ==1){
-      turnOn_LaunchpadLED1();
-      turnOn_LaunchpadLED2Red();
-  }
-  else if (count ==2){
-      turnOn_LaunchpadLED2Red();
-      turnOn_LaunchpadLED1();
-    }
-  else if (count ==3){
-      turnOn_LaunchpadLED2Red();
-      turnOn_LaunchpadLED2Blue();
-    }
-  else if (count ==4){
-      turnOn_LaunchpadLED2Red();
-      turnOn_LaunchpadLED2Green();
-    }
-  else if (count ==5){
-      turnOn_LaunchpadLED2Green();
-      turnOn_LaunchpadLED2Blue();
-    }
-  else if (count ==6){
-      turnOn_LaunchpadLED2Green();
-      turnOn_LaunchpadLED1();
-    }
-  else if (count ==7){
-      turnOn_LaunchpadLED2Blue();
-      turnOn_LaunchpadLED1();
-    }
-  else if (count ==8){
-      turnOn_LaunchpadLED2Blue();
-      turnOn_LaunchpadLED2Red();
-      turnOn_LaunchpadLED2Green();
+        turnOn_LaunchpadLED1();
 
     }
-  else if (count ==9){
-
-      turnOn_LaunchpadLED2Red();
-
+    else if (count ==1){
+        turnOn_LaunchpadLED1();
+        turnOn_LaunchpadLED2Red();
     }
-  else if (count ==10){
-      turnOn_LaunchpadLED2Blue();
-      turnOn_LaunchpadLED2Red();
-      turnOn_LaunchpadLED2Green();
+    else if (count ==2){
+        turnOn_LaunchpadLED2Red();
 
-    }
-  else if (count ==11){
-      turnOn_LaunchpadLED2Blue();
+      }
+    else if (count ==3){
+        turnOn_LaunchpadLED2Red();
+        turnOn_LaunchpadLED2Blue();
+      }
+    else if (count ==4){
+        turnOn_LaunchpadLED2Red();
+        turnOn_LaunchpadLED2Green();
+      }
+    else if (count ==5){
+        turnOn_LaunchpadLED2Green();
+        turnOn_LaunchpadLED2Blue();
+      }
+    else if (count ==6){
+        turnOn_LaunchpadLED2Green();
+
+      }
+    else if (count ==7){
+        turnOn_LaunchpadLED2Blue();
+
+      }
+    else if (count ==8){
+        turnOn_LaunchpadLED2Blue();
+        turnOn_LaunchpadLED2Red();
+        turnOn_LaunchpadLED2Green();
+
+      }
+    else if (count ==9){
+
+        turnOn_LaunchpadLED2Red();
+
+      }
+    else if (count ==10){
+        turnOn_LaunchpadLED2Blue();
+        turnOn_LaunchpadLED2Red();
+        turnOn_LaunchpadLED2Green();
+
+      }
+    else if (count ==11){
+        turnOn_LaunchpadLED2Blue();
 
 
-    }
-
-
-
+      }
 
 }
 
@@ -152,43 +175,47 @@ void changeLaunchpadLED2(unsigned int count)
 // This is essentially a copy of the previous function, using a different LED
 void changeBoosterpackLED(unsigned int count1)
 {
-   reset_BoosterLED();
+    reset_BoosterLED();
    if (count1 ==0 ){
 
        turnOn_BoosterpackLEDRed();
 
    }
    else if (count1 ==1){
+  turnOn_BoosterpackLEDGreen();
 
-        turnOn_BoosterpackLEDBlue();
    }
    else if (count1 ==2){
-       turnOn_BoosterpackLEDGreen();
-
-     }
-   else if (count1 ==3){
+ turnOn_BoosterpackLEDBlue();
+   }
+   else if (count1 ==3)
+   {
        turnOn_BoosterpackLEDRed();
-     }
-   else if (count1 ==4){
-       turnOn_BoosterpackLEDBlue();
        turnOn_BoosterpackLEDGreen();
-     }
+   }
+   else if (count1 ==4){
+       turnOn_BoosterpackLEDGreen();
+       turnOn_BoosterpackLEDBlue();
+   }
    else if (count1 ==5){
        turnOn_BoosterpackLEDBlue();
-     }
-   else if (count1 ==6){
-       turnOn_BoosterpackLEDBlue();
        turnOn_BoosterpackLEDRed();
-       turnOn_BoosterpackLEDGreen();
+   }
+   else if (count1 ==6){
+         turnOn_BoosterpackLEDBlue();
+         turnOn_BoosterpackLEDRed();
+         turnOn_BoosterpackLEDGreen();
      }
    else if (count1 ==7){
        turnOn_BoosterpackLEDGreen();
+         turnOn_BoosterpackLEDRed();
+     }
 
-     }
    else if (count1 ==8){
-       turnOn_BoosterpackLEDBlue();
-       turnOn_BoosterpackLEDRed();
+         turnOn_BoosterpackLEDBlue();
+         turnOn_BoosterpackLEDRed();
      }
+
 
 
 }
